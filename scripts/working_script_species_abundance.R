@@ -17,6 +17,7 @@ getwd() # check and make sure it's where you want it (i.e. where the csv is)
 
 ## Load Packages:
 
+library(tidyverse)
 library(plyr)
 library(tidyr)
 library(dplyr)
@@ -32,18 +33,12 @@ data_path <- "data/SpeciesAbundance_1995-2019.csv"
 AlexSpeciesAbund_1995_2019 <- read.csv(data_path, stringsAsFactors = F, strip.white = T, na.strings = c("","NA"))
 # read csv into R; species are columns, sites are rows, presences = 0, absences = 1
 
-# Or use file.choose() command to locate:
-#filename<-file.choose()  # select dataframe "SpeciesAbundance_1995-2019.csv" from file on your computer
-# AlexSpeciesAbund_1995_2019 <- read.csv(filename,stringsAsFactors=F, strip.white=T,na.strings = c("","NA"))
-
 
 # This is an example species. You will repeat this with your group's assigned species
-
 # Create a new data frame with only PAPRAD species abundance at CASS site (subset)
-# AlexSpeciesAbund_1995_2019 <- read.csv("SpeciesAbundance_1995-2019.csv", header=TRUE, stringsAsFactors=T, strip.white = T,na.strings = c("","NA"),skip=0)
 
-WILL_SpeciesAbund_1995_2019 <- subset(AlexSpeciesAbund_1995_2019, AlexSpeciesAbund_1995_2019$SUBSITE=="WILLOW", select = c(SUBSITE,TRTMT,PLOT,SPP,YEAR,Abundance))
-PAPRAD_WILL_SpeciesAbund_1995_2019 <- subset(WILL_SpeciesAbund_1995_2019, WILL_SpeciesAbund_1995_2019$SPP=="PAPRAD", select = c(SUBSITE,TRTMT,PLOT,SPP,YEAR,Abundance))
+DRYAS_SpeciesAbund_1995_2019 <- subset(AlexSpeciesAbund_1995_2019, AlexSpeciesAbund_1995_2019$SUBSITE=="DRYAS", select = c(SUBSITE,TRTMT,PLOT,SPP,YEAR,Abundance))
+CASTET_DRYAS_SpeciesAbund_1995_2019 <- subset(DRYAS_SpeciesAbund_1995_2019, DRYAS_SpeciesAbund_1995_2019$SPP=="CASTET", select = c(SUBSITE,TRTMT,PLOT,SPP,YEAR,Abundance))
 
 # Plot PAPRAD abundance difference between control and OTC plots for all years
 boxplot(Abundance~TRTMT, data = PAPRAD_WILL_SpeciesAbund_1995_2019, yaxt="n", col=(c("cyan3","darkorange")), boxwex = 0.5, main = "PAPRAD abundance WILL site ")
